@@ -1,0 +1,29 @@
+# A scene consisting of a volumetric data set
+
+eye
+  0 0 10
+  0 0 0
+  0 1 0       # up
+  .6          # field of view in y direction, in radians
+
+light
+  0 0 10      # position
+  1 1 1       # colour
+
+material
+  red         # name
+  1 1 1       # ambient reflectivity (Ka)
+  1 0 0       # diffuse reflectivity (Kd)
+  1 1 1       # specular reflectivity (Ks)
+  10          # shininess (n)
+  0 0 0       # emission (Ie)
+  1           # opacity (alpha)
+  -           # texture filename (- means no texture)
+  -
+
+volume
+  ../CThead/CThead   # base filename (we add .1, .2, ...)
+  256 256 113        # dataset dimensions
+  .004 .004 .01      # scale (the spacing in world coords in each dimension)
+  0 0 0              # centre
+  red                # material

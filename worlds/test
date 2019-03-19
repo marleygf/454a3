@@ -1,0 +1,13 @@
+# Test of Wavefront teapot
+
+eye
+   0.25 0.25 10
+   0.25 0.25 0 
+   0 1 0
+   0.2000
+
+light
+  1 1 1
+  1 1 1
+
+wavefront test.obj
