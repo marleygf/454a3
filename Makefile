@@ -7,11 +7,11 @@ OBJS =	main.o arcballWindow.o font.o scene.o sphere.o triangle.o light.o eye.o o
 	material.o texture.o vertex.o volume.o wavefrontobj.o wavefront.o bvh.o linalg.o \
 	gpuProgram.o axes.o arrow.o bbox.o glverts.o glad/src/glad.o
 
-# LDFLAGS  = -Llib32 -lglfw -lGL -lpng12 -ldl -lfreetype
-# CXXFLAGS = -O2 -I/usr/include/freetype2 -Wall -Wno-write-strings -Wno-parentheses -Wno-unused-variable -Wno-unused-result -DLINUX -DUSE_FREETYPE -DHAVEPNG
+LDFLAGS  = -Llib32 -lglfw -lGL -lpng -ldl -lfreetype
+CXXFLAGS = -O2 -I/usr/include/freetype2 -Wall -Wno-write-strings -Wno-parentheses -Wno-unused-variable -Wno-unused-result -DLINUX -DUSE_FREETYPE -DHAVEPNG
 
-LDFLAGS  = -Llib32 -lglfw -lGL -ldl
-CXXFLAGS = -O2 -Wall -Wno-write-strings -Wno-parentheses -Wno-unused-variable -Wno-unused-result -DLINUX
+#LDFLAGS  = -Llib32 -lglfw -lGL -ldl
+#CXXFLAGS = -O2 -Wall -Wno-write-strings -Wno-parentheses -Wno-unused-variable -Wno-unused-result -DLINUX
 
 CXX      = g++
 
