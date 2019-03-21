@@ -7,11 +7,19 @@
 // The <ft2build.h> should be on your 'include' path
 
 
+#ifndef HAVE_FREETYPE
+
+#include "headers.h"
+void initFont( char *ttf_file, int height_in_pixels ) {}
+void render_text( const char *text, int pixOriginX, int pixOriginY, GLFWwindow* window ) {}
+
+#else
+
 #include "headers.h"
 #include "gpuProgram.h"
 #include <cstring>
 
-#include <ft2build.h>
+#include <ft2build.h>		// requires the freetype library.  On Linux: "sudo apt-get install freetype6-dev"
 #include FT_FREETYPE_H
 
 
@@ -68,7 +76,7 @@ void initFont( char *ttf_file, int height_in_pixels )
   glGenBuffers( 1, &vbo );
 
   gpu = new GPUProgram();
-  gpu->init( vertexShader, fragmentShader );
+  gpu->init( vertexShader, fragmentShader, "font vertex shader", "font fragment shader" );
 }
 
 
@@ -97,7 +105,10 @@ void render_text( const char *text, int pixOriginX, int pixOriginY, GLFWwindow* 
 
   // Code common to all character textures
 
-  glActiveTexture( GL_TEXTURE0 );
+  if (tex != 1)
+    cout << "Font using texture " << tex << endl;
+
+  glActiveTexture( GL_TEXTURE1 );
   glBindTexture( GL_TEXTURE_2D, tex );
 
   glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
@@ -111,7 +122,7 @@ void render_text( const char *text, int pixOriginX, int pixOriginY, GLFWwindow* 
   // GPU init
 
   gpu->activate();
-  gpu->setInt( "tex", 0 ); // texture is managed by texture unit 0 (= GL_TEXTURE0 above)
+  gpu->setInt( "tex", 1 ); // texture is managed by texture unit 1 (= GL_TEXTURE1 above)
   gpu->setVec4( "colour", vec4(0,0,0,1) ); // character colour
 
   // Code common to all VBO init
@@ -126,8 +137,6 @@ void render_text( const char *text, int pixOriginX, int pixOriginY, GLFWwindow* 
 
   glEnable( GL_BLEND );
   glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
-
-  glDisable( GL_DEPTH_TEST );
 
   FT_GlyphSlot g = face->glyph;
 
@@ -167,3 +176,5 @@ void render_text( const char *text, int pixOriginX, int pixOriginY, GLFWwindow* 
 
   glBindVertexArray( 0 );
 }
+
+#endif
