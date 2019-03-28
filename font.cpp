@@ -19,7 +19,7 @@ void render_text( const char *text, int pixOriginX, int pixOriginY, GLFWwindow* 
 #include "gpuProgram.h"
 #include <cstring>
 
-#include <ft2build.h>		// requires the freetype library.  On Linux: "sudo apt-get install freetype6-dev"
+#include <ft2build.h>           // requires the freetype library.  On Linux: "sudo apt-get install freetype6-dev"
 #include FT_FREETYPE_H
 
 

@@ -183,17 +183,17 @@ mat4 quaternion::toMatrix() const
   mat4 m;
 
   m.rows[0] = vec4( 2 * (q.w*q.w + q.x*q.x - .5),
-		    2 * (q.x*q.y - q.w*q.z),
-		    2 * (q.x*q.z + q.w*q.y),
-		    0 );
+                    2 * (q.x*q.y - q.w*q.z),
+                    2 * (q.x*q.z + q.w*q.y),
+                    0 );
   m.rows[1] = vec4( 2 * (q.x*q.y + q.w*q.z),
-		    2 * (q.w*q.w + q.y*q.y - .5),
-		    2 * (q.y*q.z - q.w*q.x),
-		    0 );
+                    2 * (q.w*q.w + q.y*q.y - .5),
+                    2 * (q.y*q.z - q.w*q.x),
+                    0 );
   m.rows[2] = vec4( 2 * (q.x*q.z - q.w*q.y),
-		    2 * (q.y*q.z + q.w*q.x),
-		    2 * (q.w*q.w + q.z*q.z - .5),
-		    0 );
+                    2 * (q.y*q.z + q.w*q.x),
+                    2 * (q.w*q.w + q.z*q.z - .5),
+                    0 );
   m.rows[3] = vec4( 0, 0, 0, 1 );
 
   return m;
@@ -258,7 +258,6 @@ mat3 operator * ( float k, mat3 const& m )
   out.rows[0] = k * m.rows[0];
   out.rows[1] = k * m.rows[1];
   out.rows[2] = k * m.rows[2];
-  out.rows[3] = k * m.rows[3];
 
   return out;
 }
@@ -287,7 +286,7 @@ mat3 operator * ( mat3 const& m, mat3 const& n )
       float sum=0;
 
       for (int k=0; k<3; k++)
-	sum += m[i][k] * n[k][j];
+        sum += m[i][k] * n[k][j];
 
       out[i][j] = sum;
     }
@@ -360,7 +359,7 @@ mat4 operator * ( mat4 const& m, mat4 const& n )
       float sum=0;
 
       for (int k=0; k<4; k++)
-	sum += m[i][k] * n[k][j];
+        sum += m[i][k] * n[k][j];
 
       out[i][j] = sum;
     }
@@ -631,9 +630,9 @@ mat4 identity4()
   for (int i=0; i<4; i++)
     for (int j=0; j<4; j++)
       if (i==j)
-	M[i][j] = 1;
+        M[i][j] = 1;
       else
-	M[i][j] = 0;
+        M[i][j] = 0;
 
   return M;
 }

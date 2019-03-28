@@ -19,7 +19,7 @@ class Object {
   Object() {}
 
   virtual bool rayInt( vec3 rayStart, vec3 rayDir, int objPartIndex, float maxParam,
-		       vec3 &intPoint, vec3 &intNorm, vec3 &intTexCoords, float &intParam, Material * &mat, int &intPartIndex ) = 0;
+                       vec3 &intPoint, vec3 &intNorm, vec3 &intTexCoords, float &intParam, Material * &mat, int &intPartIndex ) = 0;
 
   virtual vec3 textureColour( vec3 &p, int objPartIndex, float &alpha, vec3 &texCoords ) {
     alpha = 1;

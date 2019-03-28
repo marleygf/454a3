@@ -49,12 +49,12 @@ BVH_node * BVH::buildSubtree( seq<int> &triangleIndices, int depth )
 
   int numSeeds = MIN( K, triangleIndices.size() );
 
-  BBox seedBoxes[numSeeds];
-  int  seedIndices[numSeeds];
+  BBox *seedBoxes = new BBox[numSeeds];
+  int  *seedIndices =  new int[numSeeds];
 
   // Get first seed box
 
-  int randIndex = random() % triangleIndices.size();
+  int randIndex = rand() % triangleIndices.size();
   seedBoxes[0] = triangleBBox( triangleIndices[randIndex] );
   seedIndices[0] = randIndex;
 
@@ -74,13 +74,13 @@ BVH_node * BVH::buildSubtree( seq<int> &triangleIndices, int depth )
       int randIndex;
       bool alreadyExists;
       do {
-	randIndex = random() % triangleIndices.size();
-	alreadyExists = false;
-	for (int k=0; k<i; k++)
-	  if (randIndex == seedIndices[k]) {
-	    alreadyExists = true;
-	    break;
-	  }
+        randIndex = rand() % triangleIndices.size();
+        alreadyExists = false;
+        for (int k=0; k<i; k++)
+          if (randIndex == seedIndices[k]) {
+            alreadyExists = true;
+            break;
+          }
       } while (alreadyExists);
 
       // Build the box for this triangle
@@ -91,17 +91,17 @@ BVH_node * BVH::buildSubtree( seq<int> &triangleIndices, int depth )
 
       float minDist = MAXFLOAT;
       for (int k=0; k<i; k++) {
-	float thisDist = boxBoxDistance( candidateBox, seedBoxes[k] );
-	if (thisDist < minDist)
-	  minDist = thisDist;
+        float thisDist = boxBoxDistance( candidateBox, seedBoxes[k] );
+        if (thisDist < minDist)
+          minDist = thisDist;
       }
 
       // Use this candidate if it's farther than the previous candidate.
 
       if (minDist > maxDist) {
-	maxDist = minDist;
-	seedBoxes[i] = candidateBox;
-	seedIndices[i] = randIndex;
+        maxDist = minDist;
+        seedBoxes[i] = candidateBox;
+        seedIndices[i] = randIndex;
       }
     }
   }
@@ -121,7 +121,7 @@ BVH_node * BVH::buildSubtree( seq<int> &triangleIndices, int depth )
   clusterTriangles = new seq<int>[numSeeds];
 
   for (int i=0; i<triangleIndices.size(); i++) { // all triangles
-    int j = random() % numSeeds;
+    int j = rand() % numSeeds;
     clusterTriangles[j].add( triangleIndices[i] );
   }
 
@@ -148,6 +148,9 @@ BVH_node * BVH::buildSubtree( seq<int> &triangleIndices, int depth )
   // YOUR CODE HERE
 
 #endif
+
+  delete[] seedBoxes;
+  delete[] seedIndices;
 
   // Now build the node
 
@@ -211,12 +214,12 @@ BBox BVH::triangleBBox( int triIndex )
   vec3 &v2 = (*vertices)[triangles[triIndex].v2];
 
   vec3 min( MIN(v0.x,MIN(v1.x,v2.x)),
-	    MIN(v0.y,MIN(v1.y,v2.y)),
-	    MIN(v0.z,MIN(v1.z,v2.z)) );
+            MIN(v0.y,MIN(v1.y,v2.y)),
+            MIN(v0.z,MIN(v1.z,v2.z)) );
 
   vec3 max( MAX(v0.x,MAX(v1.x,v2.x)),
-	    MAX(v0.y,MAX(v1.y,v2.y)),
-	    MAX(v0.z,MAX(v1.z,v2.z)) );
+            MAX(v0.y,MAX(v1.y,v2.y)),
+            MAX(v0.z,MAX(v1.z,v2.z)) );
 
   return BBox(min,max);
 }
@@ -299,23 +302,23 @@ bool BVH::rayIntBVH( BVH_node*n, vec3 rayStart, vec3 rayDir, int sourceTriangleI
       int triangleIndex = (*n->triangles)[i];
       if (triangleIndex != sourceTriangleIndex) { // this isn't the triangle from which the ray started
 
-	float param, alpha, beta, gamma;
-	vec3 point, normal, texcoords;
+        float param, alpha, beta, gamma;
+        vec3 point, normal, texcoords;
 
-	if (triangleInt( rayStart, rayDir, triangleIndex, maxParam, param, point, normal, texcoords, alpha, beta, gamma )) { // returns param, point, alpha, beta, gamma
+        if (triangleInt( rayStart, rayDir, triangleIndex, maxParam, param, point, normal, texcoords, alpha, beta, gamma )) { // returns param, point, alpha, beta, gamma
 
-	  // found a new closest point
+          // found a new closest point
 
-	  intParam  = param;
-	  intPoint  = point;
-	  intNormal = normal;
-	  intTexCoords = texcoords;
-	  intTriangleIndex = triangleIndex;
-	  intMaterial = materials[ triangles[ (*n->triangles)[i] ].materialID ]; 
+          intParam  = param;
+          intPoint  = point;
+          intNormal = normal;
+          intTexCoords = texcoords;
+          intTriangleIndex = triangleIndex;
+          intMaterial = materials[ triangles[ (*n->triangles)[i] ].materialID ]; 
 
-	  maxParam = param;
-	  hit = true;
-	}
+          maxParam = param;
+          hit = true;
+        }
       }
     }
 
@@ -327,10 +330,10 @@ bool BVH::rayIntBVH( BVH_node*n, vec3 rayStart, vec3 rayDir, int sourceTriangleI
     for (int i=0; i<n->children->size(); i++) {
       BVH_node *thisNode = (*n->children)[i];
       if (rayBoxInt( rayStart, rayDir, 0, maxParam, thisNode->bbox )) {
-	if (rayIntBVH( thisNode, rayStart, rayDir, sourceTriangleIndex, maxParam, intPoint, intNormal, intTexCoords, intParam, intMaterial, intTriangleIndex )) {
-	  maxParam = intParam;
-	  hit = true;
-	}
+        if (rayIntBVH( thisNode, rayStart, rayDir, sourceTriangleIndex, maxParam, intPoint, intNormal, intTexCoords, intParam, intMaterial, intTriangleIndex )) {
+          maxParam = intParam;
+          hit = true;
+        }
       }
     }
   }

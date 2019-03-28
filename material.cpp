@@ -41,15 +41,15 @@ ostream& operator << ( ostream& stream, Material const& mat )
 
 {
   stream << "material" << endl
-	 << "  " << mat.name << endl
-	 << "  " << mat.ka << endl
-	 << "  " << mat.kd << endl
-	 << "  " << mat.ks << endl
-	 << "  " << mat.n << endl
-	 << "  " << mat.g << endl
-	 << "  " << mat.Ie << endl
-	 << "  " << mat.alpha << endl
-	 << "  " << mat.texName << endl;
+         << "  " << mat.name << endl
+         << "  " << mat.ka << endl
+         << "  " << mat.kd << endl
+         << "  " << mat.ks << endl
+         << "  " << mat.n << endl
+         << "  " << mat.g << endl
+         << "  " << mat.Ie << endl
+         << "  " << mat.alpha << endl
+         << "  " << mat.texName << endl;
   
   return stream;
 }
@@ -84,7 +84,7 @@ istream& operator >> ( istream& stream, Material & mat )
 
   if (texName[0] == '-' && texName[1] == '\0') {
 
-    mat.texture = NULL;		// no texture
+    mat.texture = NULL;         // no texture
     mat.texName = strdup( "-" );
 
   } else {
@@ -94,7 +94,7 @@ istream& operator >> ( istream& stream, Material & mat )
     int i;
     for (i=0; i<scene->textures.size(); i++)
       if (strcmp( texName, scene->textures[i]->name ) == 0)
-	break;
+        break;
 
     // Create the texture if it's not already loaded
     
@@ -109,7 +109,7 @@ istream& operator >> ( istream& stream, Material & mat )
 
   if (bumpName[0] == '-' && bumpName[1] == '\0') {
 
-    mat.bumpMap = NULL;		// no bump map
+    mat.bumpMap = NULL;         // no bump map
     mat.bumpMapName = strdup( "-" );
 
   } else {
@@ -121,7 +121,7 @@ istream& operator >> ( istream& stream, Material & mat )
     int i;
     for (i=0; i<scene->textures.size(); i++)
       if (strcmp( texName, scene->textures[i]->name ) == 0)
-	break;
+        break;
 
     // Create the texture if it's not already loaded
     

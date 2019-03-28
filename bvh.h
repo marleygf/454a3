@@ -26,9 +26,9 @@ public:
  BVH_triangle() {}
 
  BVH_triangle( unsigned int _v0, unsigned int _v1, unsigned int _v2, 
-	       unsigned int _t0, unsigned int _t1, unsigned int _t2, 
-	       unsigned int _n0, unsigned int _n1, unsigned int _n2, 
-	       unsigned int _materialID, unsigned int _faceID )
+               unsigned int _t0, unsigned int _t1, unsigned int _t2, 
+               unsigned int _n0, unsigned int _n1, unsigned int _n2, 
+               unsigned int _materialID, unsigned int _faceID )
   {
     v0 = _v0; v1 = _v1; v2 = _v2;
     t0 = _t0; t1 = _t1; t2 = _t2;
@@ -44,10 +44,10 @@ class BVH_node {
 
 public:
 
-  BBox bbox;		           // node's bounding box
+  BBox bbox;                       // node's bounding box
   bool isLeaf;                     // true iff this is a leaf in the BVH
   union {
-    seq<BVH_node*> *children;	   // present only for non-leaves
+    seq<BVH_node*> *children;      // present only for non-leaves
     seq<int>       *triangles;     // present only for leaves and contains INDICES of leaf triangles
   };
 };
@@ -61,7 +61,7 @@ class BVH {
   void freeTree( BVH_node *n ) {
     if (!n->isLeaf)
       for (int i=0; i<n->children->size(); i++)
-	freeTree( (*n->children)[i] );
+        freeTree( (*n->children)[i] );
     delete n;
   }
 
@@ -104,7 +104,7 @@ public:
       // Create a sequence of all triangle indices
       seq<int> triangleIndices( triangles.size() );
       for (int i=0; i<triangles.size(); i++)
-	triangleIndices.add( i );
+        triangleIndices.add( i );
       // Build the tree
       root = buildSubtree( triangleIndices, 0 );
     }

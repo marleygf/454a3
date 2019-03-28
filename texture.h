@@ -12,9 +12,9 @@
 
 class Texture {
 
-  GLubyte *texmap;		/* texture map */
-  int width, height;		/* texmap dimensions */
-  bool hasAlpha;		/* true if alpha channel exists */
+  GLubyte *texmap;              /* texture map */
+  int width, height;            /* texmap dimensions */
+  bool hasAlpha;                /* true if alpha channel exists */
 
   void registerWithOpenGL();
   GLubyte *readP6( char *filename );
@@ -25,11 +25,11 @@ class Texture {
 
  public:
 
-  GLuint textureID;		/* the OpenGL ID for this texture */
+  GLuint textureID;             /* the OpenGL ID for this texture */
 
   static bool useMipMaps;
 
-  char *name;			/* filename */
+  char *name;                   /* filename */
 
   Texture() {}
 

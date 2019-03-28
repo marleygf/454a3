@@ -46,7 +46,7 @@ void Texture::registerWithOpenGL( )
   glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR );
 
   glTexImage2D( GL_TEXTURE_2D, 0, (hasAlpha ? GL_RGBA : GL_RGB), width, height, 0,
-		(hasAlpha ? GL_RGBA : GL_RGB), GL_UNSIGNED_BYTE, texmap );
+                (hasAlpha ? GL_RGBA : GL_RGB), GL_UNSIGNED_BYTE, texmap );
 
   glGenerateMipmap( GL_TEXTURE_2D );
 }
@@ -231,7 +231,7 @@ unsigned char *Texture::readPNG( char *filename )
 
   if (png_get_bit_depth(png_ptr, info_ptr) != 8) {
     cerr << "Can't handle PNG files with bit depth other than 8.  '" << filename
-	 << "' has " << png_get_bit_depth(png_ptr, info_ptr) << " bits per pixel." << endl;
+         << "' has " << png_get_bit_depth(png_ptr, info_ptr) << " bits per pixel." << endl;
     exit(-1);
   }
 
@@ -254,18 +254,18 @@ unsigned char *Texture::readPNG( char *filename )
     for (int c=0; c < rowbytes; c++)
       switch (numChannels) {
       case 1:
-	*(pb)++ = row[c];
-	*(pb)++ = row[c];
-	*(pb)++ = row[c];
-	break;
+        *(pb)++ = row[c];
+        *(pb)++ = row[c];
+        *(pb)++ = row[c];
+        break;
       case 2:
-	cerr << "Can't handle a two-channel PNG file: " << filename << endl;
-	exit(-1);
-	break;
+        cerr << "Can't handle a two-channel PNG file: " << filename << endl;
+        exit(-1);
+        break;
       case 3:
       case 4:
-	*(pb)++ = row[c];
-	break;
+        *(pb)++ = row[c];
+        break;
       }
   }
 

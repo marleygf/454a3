@@ -61,10 +61,10 @@ void WavefrontObj::copyWavefrontToBVH( BVH &bvh )
     for (int j=0; j<obj->groups[groupID]->triangles.size(); j++) {
       wfTriangle *tri = obj->groups[groupID]->triangles[j];
       bvh.triangles.add( BVH_triangle( tri->vindices[0], tri->vindices[1], tri->vindices[2], // indices into vertices[] 
-				       tri->tindices[0], tri->tindices[1], tri->tindices[2], // indices into texcoords[]
-				       tri->nindices[0], tri->nindices[1], tri->nindices[2], // indices into normals[]
-				       bvh.materials.size()-1,                               // index into mats[]
-				       tri->findex ) );                                      // index into facetnorms[]
+                                       tri->tindices[0], tri->tindices[1], tri->tindices[2], // indices into texcoords[]
+                                       tri->nindices[0], tri->nindices[1], tri->nindices[2], // indices into normals[]
+                                       bvh.materials.size()-1,                               // index into mats[]
+                                       tri->findex ) );                                      // index into facetnorms[]
     }    
   }
 }

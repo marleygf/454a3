@@ -12,7 +12,7 @@
 // see whether the intersection point is inside.
 
 bool Triangle::rayInt( vec3 rayStart, vec3 rayDir, int objPartIndex, float maxParam,
-		       vec3 &intPoint, vec3 &intNorm, vec3 &intTexCoords, float &intParam, Material * &mat, int &intPartIndex )
+                       vec3 &intPoint, vec3 &intNorm, vec3 &intTexCoords, float &intParam, Material * &mat, int &intPartIndex )
 
 {
   float param;
@@ -22,8 +22,8 @@ bool Triangle::rayInt( vec3 rayStart, vec3 rayDir, int objPartIndex, float maxPa
 
   float dn = rayDir * faceNormal;
 
-  if (fabs(dn) < 0.0001) 	// *** CHANGED TO ALLOW INTERSECTION FROM BEHIND TRIANGLE ***
-    return false;		// ray is parallel to plane
+  if (fabs(dn) < 0.0001)        // *** CHANGED TO ALLOW INTERSECTION FROM BEHIND TRIANGLE ***
+    return false;               // ray is parallel to plane
 
   param = (dist - rayStart*faceNormal) / dn;
   if (param < 0)
@@ -48,7 +48,7 @@ bool Triangle::rayInt( vec3 rayStart, vec3 rayDir, int objPartIndex, float maxPa
   // Find the normal with bump mapping
 
   if (mat->bumpMap != NULL) {
-    intNorm = faceNormal;	// NOT YET IMPLEMENTED!
+    intNorm = faceNormal;       // NOT YET IMPLEMENTED!
     return true;
   }
 
@@ -95,9 +95,9 @@ vec3 Triangle::barycentricCoords( vec3 p )
 {
   float w = barycentricFactor * (((verts[1].position-verts[0].position) ^ (p - verts[0].position)) * faceNormal); // for v2
   float v = barycentricFactor * (((p - verts[0].position) ^ (verts[2].position - verts[0].position)) * faceNormal); // for v1
-  float u = 1.0 - v - w;	// for v0
+  float u = 1.0 - v - w;        // for v0
 
-  return vec3( u, v, w );	// for (v0,v1,v2) = (gamma, alpha, beta)
+  return vec3( u, v, w );       // for (v0,v1,v2) = (gamma, alpha, beta)
 }
 
 
@@ -107,9 +107,9 @@ void Triangle::output( ostream &stream ) const
 
 {
   stream << "triangle" << endl
-	 << "  " << verts[0] << endl
-	 << "  " << verts[1] << endl
-	 << "  " << verts[2] << endl;
+         << "  " << verts[0] << endl
+         << "  " << verts[1] << endl
+         << "  " << verts[2] << endl;
 }
 
 
@@ -143,7 +143,7 @@ void Triangle::renderGL( GPUProgram *prog, mat4 &WCS_to_VCS, mat4 &VCS_to_CCS )
 
     for (int i=0; i<3; i++) {
       attribs[i]   = verts[i].position;  // position
-      attribs[i+3] = faceNormal;	 // normal
+      attribs[i+3] = faceNormal;         // normal
       attribs[i+6] = verts[i].texCoords; // texcoords (3D !!!)
     }
 

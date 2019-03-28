@@ -17,9 +17,9 @@ typedef enum { TRANSLATE, ROTATE } ModeType;
 
 class arcballWindow {
 
-  vec2     mouse;		// last mouse position
-  ModeType mode;		// translate or rotate mode
-  int      buttonDown;		// mouse button currently held down
+  vec2     mouse;               // last mouse position
+  ModeType mode;                // translate or rotate mode
+  int      buttonDown;          // mouse button currently held down
 
   vec3 arcballPos( vec2 pos );
   mat4 arcballTransform( vec2 pos, vec2 prevPos );
@@ -38,9 +38,9 @@ class arcballWindow {
   bool        redisplay;
   bool        mouseMoved; 
 
-  float fovy;			// field of view in y
-  vec3  eye, upDir, lookAt;	// viewing parameters
-  float zNear, zFar;		// near/far clipping planes
+  float fovy;                   // field of view in y
+  vec3  eye, upDir, lookAt;     // viewing parameters
+  float zNear, zFar;            // near/far clipping planes
 
   float windowWidth, windowHeight;
 

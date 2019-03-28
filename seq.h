@@ -40,19 +40,19 @@ template<class T> class seq {
 
 public:
 
-  seq() {			// constructor
+  seq() {                       // constructor
     storageSize = 2;
     numElements = 0;
     data = new T[ storageSize ];
   }
 
-  seq( int n ) {		// constructor
+  seq( int n ) {                // constructor
     storageSize = n;
     numElements = 0;
     data = new T[ storageSize ];
   }
 
-  ~seq() {			// destructor
+  ~seq() {                      // destructor
     delete [] data;
   }
 
@@ -85,7 +85,7 @@ public:
   T & operator [] ( int i ) const {
     if (i >= numElements || i < 0) {
       cerr << "element: Tried to access an element beyond the range of the sequence: "
-	   << i << "(numElements = " << numElements << ")\n";
+           << i << "(numElements = " << numElements << ")\n";
       { int i = 0;
       int j = 1 / i;
       j = j;
@@ -205,7 +205,7 @@ seq<T>::shift( int i )
 {
   if (i < 0 || i >= numElements) {
     cerr << "remove: Tried to shift element " << i
-	 << " from a sequence of " << numElements << " elements \n";
+         << " from a sequence of " << numElements << " elements \n";
     exit(-1);
   }
 
@@ -236,7 +236,7 @@ seq<T>::remove( int i )
 {
   if (i < 0 || i >= numElements) {
     cerr << "remove: Tried to remove element " << i
-	 << " from a sequence of " << numElements << " elements \n";
+         << " from a sequence of " << numElements << " elements \n";
     { int i = 0;
     int j = 1 / i;
     }

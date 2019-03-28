@@ -27,7 +27,7 @@ class GPUProgram {
 
   void initFromFile( const char *vsFile, const char *fsFile ) {
     
-    char* vsText = textFileRead(vsFile);	
+    char* vsText = textFileRead(vsFile);        
     
     if (vsText == NULL) {
       std::cerr << "Vertex shader file '" << vsFile << "' not found." << std::endl;

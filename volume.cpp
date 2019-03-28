@@ -18,7 +18,7 @@ using namespace std;
  */
 
 bool Volume::rayInt( vec3 rayStart, vec3 rayDir, int objPartIndex, float maxParam,
-		     vec3 &intPoint, vec3 &intNorm, vec3 &intTexCoords, float &intParam, Material * &mat, int &intPartIndex )
+                     vec3 &intPoint, vec3 &intNorm, vec3 &intTexCoords, float &intParam, Material * &mat, int &intPartIndex )
 
 {
   return false;
@@ -31,10 +31,10 @@ void Volume::output( ostream &stream ) const
 
 {
   stream << "volume" << endl
-	 << "  " << name << endl
-	 << "  " << dim << endl
-	 << "  " << scale << endl
-	 << "  " << centre << endl;
+         << "  " << name << endl
+         << "  " << dim << endl
+         << "  " << scale << endl
+         << "  " << centre << endl;
 }
 
 
@@ -70,7 +70,7 @@ void Volume::input( istream &stream )
     ifstream slice( filename );
     if (!slice) {
       cerr << "Couldn't open slice '" << filename
-	   << "' of volume '" << volName << "'." << endl;
+           << "' of volume '" << volName << "'." << endl;
       exit(-1);
     }
 
@@ -103,7 +103,7 @@ float Volume::sample( float x, float y, float z )
 
   val = volume[zi][xi+yi*(int)dim.x];
 
-  return (float) val / 65535.0;	// we assume "Voxel" = 2 bytes
+  return (float) val / 65535.0; // we assume "Voxel" = 2 bytes
 }
 
 
@@ -121,7 +121,7 @@ float Volume::sample( int x, int y, int z )
 
   val = volume[z][x+y*(int)dim.x];
 
-  return (float) val / 65535.0;	// we assume "Voxel" = 2 bytes
+  return (float) val / 65535.0; // we assume "Voxel" = 2 bytes
 }
 
 
@@ -138,9 +138,9 @@ void Volume::renderGL( GPUProgram * gpuProg, mat4 &WCS_to_VCS, mat4 &VCS_to_CCS 
   for (int i=0; i<dim.x; i+=(int)dim.x/10)
     for (int j=0; j<dim.y; j+=(int)dim.y/10)
       for (int k=0; k<dim.z; k+=(int)dim.z/10) {
-	float density = sample(i,j,k);
-	glColor3f( density, density, density );
-	glVertex3f( bbox.min.x+i*scale.x, bbox.min.y+j*scale.y, bbox.min.z+k*scale.z );
+        float density = sample(i,j,k);
+        glColor3f( density, density, density );
+        glVertex3f( bbox.min.x+i*scale.x, bbox.min.y+j*scale.y, bbox.min.z+k*scale.z );
       }
   glEnd();
 

@@ -19,7 +19,7 @@ class WavefrontObj : public Object {
 
   wfModel *obj;
 
-  BVH bvh;			/* bounding volume hierarchy of triangle primitives */
+  BVH bvh;                      /* bounding volume hierarchy of triangle primitives */
 
   WavefrontObj() {}
 
@@ -53,7 +53,7 @@ class WavefrontObj : public Object {
 
   void output( ostream &stream ) {
     stream << "wavefront" << endl
-	   << "  " << obj->pathname << endl;
+           << "  " << obj->pathname << endl;
   }
 };
 

@@ -45,7 +45,7 @@ public:
   vec2 operator - (vec2 p)
     { return vec2( x-p.x, y-p.y ); }
 
-  float operator * (vec2 p)	/* dot product */
+  float operator * (vec2 p)     /* dot product */
     { return x * p.x + y * p.y; }
 
   vec2 normalize() {
@@ -228,7 +228,7 @@ std::istream& operator >> ( std::istream& stream, vec4 & p );
 class quaternion {
  public:
 
-  vec4 q;			// w = cos(theta/2), (x,y,z) = sin(theta/w) * axis
+  vec4 q;                       // w = cos(theta/2), (x,y,z) = sin(theta/w) * axis
 
   quaternion() {};
 

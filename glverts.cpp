@@ -30,7 +30,7 @@ void GLVerts::draw( seq<vec3> &pts, vec3 colour, GLenum renderMode, mat4 &MVP  )
 
   // Colours
 
-  vec3 colours[ pts.size() ];
+  vec3 *colours = new vec3[ pts.size() ];
   for (int i=0; i<pts.size(); i++)
     colours[i] = colour;
 
@@ -56,6 +56,8 @@ void GLVerts::draw( seq<vec3> &pts, vec3 colour, GLenum renderMode, mat4 &MVP  )
   glDeleteBuffers( 1, &colourbuffer );
 
   glDeleteVertexArrays( 1, &VAO );
+
+  delete[] colours;
 }
 
 

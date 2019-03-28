@@ -74,10 +74,10 @@ class RTwindow : public arcballWindow {
 
     if (button == GLFW_MOUSE_BUTTON_MIDDLE) {
       if (action == GLFW_PRESS) {
-	scene->buttonDown = button;
-	scene->mouse = mouse;
+        scene->buttonDown = button;
+        scene->mouse = mouse;
       } else
-	scene->buttonDown = -1;
+        scene->buttonDown = -1;
       return true;
     }
 
@@ -105,17 +105,17 @@ class RTwindow : public arcballWindow {
     case '-':
     case '_':
       if (scene->maxDepth > 1) {
-	scene->maxDepth--;
-	viewpointChanged = true;
-	redisplay = true;
+        scene->maxDepth--;
+        viewpointChanged = true;
+        redisplay = true;
       }
       break;
     case '<':
     case ',':
       if (scene->glossyIterations > 1) {
-	scene->glossyIterations--;
-	viewpointChanged = true;
-	redisplay = true;
+        scene->glossyIterations--;
+        viewpointChanged = true;
+        redisplay = true;
       }
       break;
     case '>':
@@ -134,27 +134,27 @@ class RTwindow : public arcballWindow {
       break;
     case 'P':
       if (mods & GLFW_MOD_SHIFT)
-	scene->numPixelSamples++;
+        scene->numPixelSamples++;
       else {
-	scene->numPixelSamples--;
-	if (scene->numPixelSamples < 1)
-	  scene->numPixelSamples = 1;
+        scene->numPixelSamples--;
+        if (scene->numPixelSamples < 1)
+          scene->numPixelSamples = 1;
       }
       redisplay = true;
       cout << "pixel sampling " <<  scene->numPixelSamples << " x " <<  scene->numPixelSamples << endl;
       break;
     case '[':
       if (mods & GLFW_MOD_SHIFT) {
-	if (scene->bvhDisplayDepth > 0) {
-	  scene->bvhDisplayDepth--;
-	  redisplay = true;
-	}
+        if (scene->bvhDisplayDepth > 0) {
+          scene->bvhDisplayDepth--;
+          redisplay = true;
+        }
       }
       break;
     case ']':
       if (mods & GLFW_MOD_SHIFT) {
-	scene->bvhDisplayDepth++;
-	redisplay = true;
+        scene->bvhDisplayDepth++;
+        redisplay = true;
       } 
       break;
     case 'A':
@@ -167,29 +167,29 @@ class RTwindow : public arcballWindow {
       break;
     case '/':
       cout
-	<< endl
-	<< "h     show/hide BVH" << endl
-	<< "}     increase shown BVH depth" << endl
-	<< "{     decrease shown BVH depth" << endl
-	<< "o     show/hide objects" << endl
-	<< ">     increase glossy rays" << endl
-	<< "<     decrease glossy rays" << endl
-	<< "+     increase ray depth" << endl
-	<< "-     decrease ray depth" << endl
-	<< "a     show/hide axes" << endl
-	<< "e     output eye position" << endl
-	<< "P     increase pixel sampling" << endl
-	<< "p     decrease pixel sampling" << endl
-	<< "j     toggle pixel sample jittering" << endl
-	<< "SPACE toggle rotation/translation mode" << endl
-	<< "DEL   delete debugging rays" << endl
-	<< "ESC   exit" << endl
-	<< endl
-	<< "left mouse click         - show rayracing through this pixel" << endl
-	<< "left mouse drag          - rotate viewpoint" << endl
-	<< "middle mouse click/drag  - zoom at this pixel" << endl
-	<< "right mouse drag up/down - zoom viewpoint" << endl
-	<< "right mouse click        - set 'debug' flag when tracing this pixel" << endl;
+        << endl
+        << "h     show/hide BVH" << endl
+        << "}     increase shown BVH depth" << endl
+        << "{     decrease shown BVH depth" << endl
+        << "o     show/hide objects" << endl
+        << ">     increase glossy rays" << endl
+        << "<     decrease glossy rays" << endl
+        << "+     increase ray depth" << endl
+        << "-     decrease ray depth" << endl
+        << "a     show/hide axes" << endl
+        << "e     output eye position" << endl
+        << "P     increase pixel sampling" << endl
+        << "p     decrease pixel sampling" << endl
+        << "j     toggle pixel sample jittering" << endl
+        << "SPACE toggle rotation/translation mode" << endl
+        << "DEL   delete debugging rays" << endl
+        << "ESC   exit" << endl
+        << endl
+        << "left mouse click         - show rayracing through this pixel" << endl
+        << "left mouse drag          - rotate viewpoint" << endl
+        << "middle mouse click/drag  - zoom at this pixel" << endl
+        << "right mouse drag up/down - zoom viewpoint" << endl
+        << "right mouse click        - set 'debug' flag when tracing this pixel" << endl;
       break;
     default:
       return false;  // not handled

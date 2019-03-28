@@ -12,10 +12,10 @@
 
 class Triangle : public Object {
 
-  Vertex verts[3];		// three vertices of the triangle
-  vec3 faceNormal;		// triangle normal
+  Vertex verts[3];              // three vertices of the triangle
+  vec3 faceNormal;              // triangle normal
   float  barycentricFactor;     // factor used in computing local coords
-  float  dist;			// distance origin-to-plane of triangle
+  float  dist;                  // distance origin-to-plane of triangle
   GLuint VAO;
 
  public:
@@ -25,7 +25,7 @@ class Triangle : public Object {
   }
 
   bool rayInt( vec3 rayStart, vec3 rayDir, int objPartIndex, float maxParam,
-	       vec3 &intPoint, vec3 &intNorm, vec3 &intTexCoords, float &intParam, Material *&mat, int &intPartIndex );
+               vec3 &intPoint, vec3 &intNorm, vec3 &intTexCoords, float &intParam, Material *&mat, int &intPartIndex );
 
   void input( istream &stream );
   void output( ostream &stream ) const;

@@ -14,8 +14,8 @@ class BBox {
 
  public:
 
-  vec3 min;			// min corner
-  vec3 max;			// max corner
+  vec3 min;                     // min corner
+  vec3 max;                     // max corner
 
   BBox() {}
 

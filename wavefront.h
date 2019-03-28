@@ -31,18 +31,18 @@ class wfMaterial {
   static unsigned char defaultTexmap[];
 
  public:
-  char    *name;		/* name of material */
-  GLfloat diffuse[4];		/* diffuse component */
-  GLfloat ambient[4];		/* ambient component */
-  GLfloat specular[4];		/* specular component */
-  GLfloat emissive[4];		/* emmissive component */
-  GLfloat shininess;		/* specular exponent */
-  GLfloat alpha;		/* material property ... not anything to do with the texmap */
+  char    *name;                /* name of material */
+  GLfloat diffuse[4];           /* diffuse component */
+  GLfloat ambient[4];           /* ambient component */
+  GLfloat specular[4];          /* specular component */
+  GLfloat emissive[4];          /* emmissive component */
+  GLfloat shininess;            /* specular exponent */
+  GLfloat alpha;                /* material property ... not anything to do with the texmap */
 
-  GLubyte *texmap;		/* texture map */
+  GLubyte *texmap;              /* texture map */
   unsigned int width, height;   /* texmap dimensions */
-  GLuint  textureID;		/* the OpenGL ID for this texture */
-  bool    hasAlpha;		/* texmap has alpha component */
+  GLuint  textureID;            /* the OpenGL ID for this texture */
+  bool    hasAlpha;             /* texmap has alpha component */
 
   wfMaterial() {}
 
@@ -79,10 +79,10 @@ class wfMaterial {
 
 class wfTriangle {
  public:
-  GLuint vindices[3];		/* array of triangle vertex indices */
-  GLuint nindices[3];		/* array of triangle normal indices */
-  GLuint tindices[3];		/* array of triangle texcoord indices*/
-  GLuint findex;		/* index of triangle facet normal */
+  GLuint vindices[3];           /* array of triangle vertex indices */
+  GLuint nindices[3];           /* array of triangle normal indices */
+  GLuint tindices[3];           /* array of triangle texcoord indices*/
+  GLuint findex;                /* index of triangle facet normal */
 };
 
 
@@ -92,9 +92,9 @@ class wfTriangle {
 
 class wfGroup {
  public:
-  char             *name;	/* name of this group */
-  seq<wfTriangle*> triangles;	/* triangles of this group */
-  wfMaterial       *material;	/* material for group */
+  char             *name;       /* name of this group */
+  seq<wfTriangle*> triangles;   /* triangles of this group */
+  wfMaterial       *material;   /* material for group */
   GLuint           VAO;
   bool             VAOinitialized;
 
@@ -133,16 +133,16 @@ class wfGroup {
 
 class wfModel {
 
-  char*    pathname;		/* path to this model */
-  char*    mtllibname;		/* name of the material library */
+  char*    pathname;            /* path to this model */
+  char*    mtllibname;          /* name of the material library */
 
-  seq<vec3>  vertices;		/* vertices */
-  seq<vec3>  normals;		/* face normals */
-  seq<vec3>  texcoords;		/* texture coordinates */
-  seq<vec3>  facetnorms;	/* face normals */
+  seq<vec3>  vertices;          /* vertices */
+  seq<vec3>  normals;           /* face normals */
+  seq<vec3>  texcoords;         /* texture coordinates */
+  seq<vec3>  facetnorms;        /* face normals */
 
-  seq<wfMaterial*> materials;	/* materials */
-  seq<wfGroup*>    groups;	/* groups (which themselves store the triangles) */
+  seq<wfMaterial*> materials;   /* materials */
+  seq<wfGroup*>    groups;      /* groups (which themselves store the triangles) */
 
   bool texturesInitialized;
 
@@ -157,19 +157,19 @@ class wfModel {
 
  public:
 
-  bool hasVertexNormals;	/* ALL vertices have normals */
-  bool hasVertexTexCoords;	/* ALL vertices have texture coordinates */
+  bool hasVertexNormals;        /* ALL vertices have normals */
+  bool hasVertexTexCoords;      /* ALL vertices have texture coordinates */
 
   mat4 objToWorldTransform;
-  vec3 centre;			/* centre of point cloud */
-  float radius;			/* radius of point cloud */
+  vec3 centre;                  /* centre of point cloud */
+  float radius;                 /* radius of point cloud */
 
   // Global vars controlling the rendering
 
   static bool newGroupWithNewMaterial; /* create a new group each time the material changes */
-  static bool verticesAreCW;	       /* calculate opposite-to-usual face normals */
+  static bool verticesAreCW;           /* calculate opposite-to-usual face normals */
 
-  vec3 min, max;		/* extents */
+  vec3 min, max;                /* extents */
 
   wfModel() {
     texturesInitialized = false;
@@ -196,8 +196,8 @@ class wfModel {
   void checkVindex( int v ) {
     if (v < 0 || v >= vertices.size()) {
       cerr << "error on line " << lineNum
-	   << ": vertex index " << v+1 << " is too large.  There are only "
-	   << vertices.size() << " vertices." << endl;
+           << ": vertex index " << v+1 << " is too large.  There are only "
+           << vertices.size() << " vertices." << endl;
       abort();
     }
   }

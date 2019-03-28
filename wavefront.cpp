@@ -509,7 +509,7 @@ void wfModel::readMaterialLibrary( char *name )
       {
         // prepend path to the directory of the model file
 
-        char *dir = new char[ strlen(pathname) ];
+        char *dir = new char[ strlen(pathname)+1 ];
         strcpy( dir, pathname );
 
         char *s = strrchr(dir, '/');
@@ -524,7 +524,7 @@ void wfModel::readMaterialLibrary( char *name )
 
         currentMaterial->loadTexmap( filename );
 
-        delete [] dir;
+        // delete [] dir;
         delete [] filename;
       }
 
@@ -620,7 +620,7 @@ void wfModel::setupVAO( TextureMode textureMode )
 
   unsigned int vertexSize = 3;
 
-  if (hasVertexNormals || true)	// always have a normal for the shader, even if not provided
+  if (hasVertexNormals || true) // always have a normal for the shader, even if not provided
     vertexSize += 3;
 
   if (hasVertexTexCoords || true) // always have texcoords for the shader, even if not provided
@@ -667,9 +667,9 @@ void wfModel::setupVAO( TextureMode textureMode )
 
             * (vec3*) &vertexBuffer[nVerts*vertexSize] = vertices[ tri->vindices[k] ];
 
-	    if (hasVertexNormals)
+            if (hasVertexNormals)
               * (vec3*) &vertexBuffer[nVerts*vertexSize+3] = normals[ tri->nindices[k] ];
-	    else
+            else
               * (vec3*) &vertexBuffer[nVerts*vertexSize+3] = facetnorms[ tri->findex ];
 
             if (hasVertexTexCoords) {
@@ -902,7 +902,7 @@ void wfMaterial::storeTexture( TextureMode textureMode )
   //glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR );
 
   glTexImage2D( GL_TEXTURE_2D, 0, (hasAlpha ? GL_RGBA : GL_RGB), width, height, 0,
-		(hasAlpha ? GL_RGBA : GL_RGB), GL_UNSIGNED_BYTE, texmap );
+                (hasAlpha ? GL_RGBA : GL_RGB), GL_UNSIGNED_BYTE, texmap );
 
   glGenerateMipmap( GL_TEXTURE_2D );
 }

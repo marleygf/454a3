@@ -34,8 +34,8 @@ ostream& operator << ( ostream& stream, Light const& obj )
 
 {
   stream << "light" << endl
-	 << "  " << obj.position << endl
-	 << "  " << obj.colour << endl;
+         << "  " << obj.position << endl
+         << "  " << obj.colour << endl;
   return stream;
 }
 

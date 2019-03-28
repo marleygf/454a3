@@ -13,8 +13,8 @@
 #define PI          3.1415926
 #define PHI_STEP    PI/16.0
 
-#define HEAD_LENGTH_FACTOR 10	// = multiple of body radius
-#define HEAD_RADIUS_FACTOR  2	// = multiple of body radius
+#define HEAD_LENGTH_FACTOR 10   // = multiple of body radius
+#define HEAD_RADIUS_FACTOR  2   // = multiple of body radius
 
 #define HEAD_ANGLE  atan2( HEAD_LENGTH_FACTOR, HEAD_RADIUS_FACTOR )
 
@@ -30,7 +30,7 @@ void Arrow::draw( GPUProgram *gpuProg, mat4 &OCS_to_WCS, mat4 &WCS_to_VCS, mat4 
   for (float phi=0; phi<1.99*PI; phi+=PHI_STEP)
     numTriangles += 5;
 
-  vec3 attribs[2*3*numTriangles]; // 2 attributes x 3 vertices x numTriangles
+  vec3 *attribs =  new vec3[2*3*numTriangles]; // 2 attributes x 3 vertices x numTriangles
 
   vec3 *pos  = &attribs[0];
   vec3 *norm = &attribs[3*numTriangles];
@@ -153,4 +153,6 @@ void Arrow::draw( GPUProgram *gpuProg, mat4 &OCS_to_WCS, mat4 &WCS_to_VCS, mat4 
 
   glDeleteBuffers( 1, &VBO );
   glDeleteVertexArrays( 1, &VAO );
+
+  delete[] attribs;
 }

@@ -58,7 +58,7 @@ int main( int argc, char **argv )
 
   // Set up the scene
 
-  scene = new Scene();		// must exist before parseOptions() is called
+  scene = new Scene();          // must exist before parseOptions() is called
   parseOptions( argc, argv );
 
   win = new RTwindow( 20, 50, 1200, 800, filename[0], scene ); // production
@@ -151,27 +151,27 @@ void parseOptions( int argc, char **argv )
     if (argv[0][0] != '-') {
 
       if (next_fn >= 2)
-	cerr << "Only two filenames allowed on command line" << endl;
+        cerr << "Only two filenames allowed on command line" << endl;
       else
-	filename[ next_fn++ ] = argv[0];
+        filename[ next_fn++ ] = argv[0];
 
     } else switch( argv[0][1] ) {
 
-    case 'd':			// max depth for ray tracing
+    case 'd':                   // max depth for ray tracing
       argc--; argv++;
       scene->maxDepth = atoi( *argv );
       break;
 
-    case 't':			// use texture maps?
+    case 't':                   // use texture maps?
       scene->useTextureTransparency = !scene->useTextureTransparency;
       break;
 
-    case 'g':			// number of glossy iterations
+    case 'g':                   // number of glossy iterations
       argc--; argv++;
       scene->glossyIterations = atoi( *argv );
       break;
 
-    case 'm':			// use mipMaps?
+    case 'm':                   // use mipMaps?
       Texture::useMipMaps = !Texture::useMipMaps;
       break;
 
@@ -218,7 +218,7 @@ void skipComments( istream &in )
     do {
       in.get(c);
       if (c == '\n')
-	lineNum++;
+        lineNum++;
     } while (in && isspace(c));
     in.putback(c);
   }

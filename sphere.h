@@ -34,7 +34,7 @@ class Sphere : public Object {
   }
 
   bool rayInt( vec3 rayStart, vec3 rayDir, int objPartIndex, float maxParam,
-	       vec3 &intPoint, vec3 &intNorm, vec3 &intTexCoords, float &intParam, Material * & mat, int &intPartIndex );
+               vec3 &intPoint, vec3 &intNorm, vec3 &intTexCoords, float &intParam, Material * & mat, int &intPartIndex );
 
   void input( istream &stream );
   void output( ostream &stream ) const;

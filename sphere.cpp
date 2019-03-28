@@ -13,7 +13,7 @@
 // Ray / sphere intersection
 
 bool Sphere::rayInt( vec3 rayStart, vec3 rayDir, int objPartIndex, float maxParam,
-		     vec3 &intPoint, vec3 &intNorm, vec3 &intTexCoords, float &intParam, Material * &mat, int &intPartIndex )
+                     vec3 &intPoint, vec3 &intNorm, vec3 &intTexCoords, float &intParam, Material * &mat, int &intPartIndex )
 
 {
   float a,b,c,d,t0,t1;
@@ -61,8 +61,8 @@ void Sphere::output( ostream &stream ) const
 
 {
   stream << "sphere" << endl
-	 << "  " << radius << endl
-	 << "  " << centre << endl;
+         << "  " << radius << endl
+         << "  " << centre << endl;
 }
 
 
@@ -94,9 +94,9 @@ void Sphere::renderGL( GPUProgram *prog, mat4 &WCS_to_VCS, mat4 &VCS_to_CCS, flo
     numQuads = 0;
     for (float phi=0; phi<1.99*PI; phi+=PHI_STEP)
       for (float theta=-0.5*PI; theta<0.49*PI; theta+=THETA_STEP)
-	numQuads++;
+        numQuads++;
 
-    vec3 attribs[3*3*numQuads*2]; // 3 vertices x 3 attributes x (numQuads*2) triangles
+    vec3 *attribs = new vec3[3*3*numQuads*2]; // 3 vertices x 3 attributes x (numQuads*2) triangles
 
     vec3 *pos  = &attribs[0];
     vec3 *norm = &attribs[3*numQuads*2];
@@ -105,56 +105,56 @@ void Sphere::renderGL( GPUProgram *prog, mat4 &WCS_to_VCS, mat4 &VCS_to_CCS, flo
     for (float phi=0; phi<1.99*PI; phi+=PHI_STEP)
       for (float theta=-0.5*PI; theta<0.49*PI; theta+=THETA_STEP) {
 
-	// One quad on the sphere
+        // One quad on the sphere
 
-	// normals
+        // normals
 
-	vec3 Nll = polarToCart( phi,          theta );
-	vec3 Nlr = polarToCart( phi+PHI_STEP, theta );
-	vec3 Nur = polarToCart( phi+PHI_STEP, theta+THETA_STEP );
-	vec3 Nul = polarToCart( phi,          theta+THETA_STEP );
+        vec3 Nll = polarToCart( phi,          theta );
+        vec3 Nlr = polarToCart( phi+PHI_STEP, theta );
+        vec3 Nur = polarToCart( phi+PHI_STEP, theta+THETA_STEP );
+        vec3 Nul = polarToCart( phi,          theta+THETA_STEP );
 
-	// positions
+        // positions
 
-	vec3 ll = centre + radius * Nll;
-	vec3 lr = centre + radius * Nlr;
-	vec3 ur = centre + radius * Nur;
-	vec3 ul = centre + radius * Nul;
+        vec3 ll = centre + radius * Nll;
+        vec3 lr = centre + radius * Nlr;
+        vec3 ur = centre + radius * Nur;
+        vec3 ul = centre + radius * Nul;
 
-	// texture coords
+        // texture coords
 
-	vec3 Tll( phi / (2*PI),            theta / PI + 0.5,              0 );
-	vec3 Tlr( (phi+PHI_STEP) / (2*PI), theta / PI + 0.5,              0 );
-	vec3 Tur( (phi+PHI_STEP) / (2*PI), (theta+THETA_STEP) / PI + 0.5, 0 );
-	vec3 Tul( phi / (2*PI),            (theta+THETA_STEP) / PI + 0.5, 0 );
+        vec3 Tll( phi / (2*PI),            theta / PI + 0.5,              0 );
+        vec3 Tlr( (phi+PHI_STEP) / (2*PI), theta / PI + 0.5,              0 );
+        vec3 Tur( (phi+PHI_STEP) / (2*PI), (theta+THETA_STEP) / PI + 0.5, 0 );
+        vec3 Tul( phi / (2*PI),            (theta+THETA_STEP) / PI + 0.5, 0 );
 
-	// First triangle
+        // First triangle
 
-	*(pos++) = ll;
-	*(pos++) = lr;
-	*(pos++) = ur;
+        *(pos++) = ll;
+        *(pos++) = lr;
+        *(pos++) = ur;
 
-	*(norm++) = Nll;
-	*(norm++) = Nlr;
-	*(norm++) = Nur;
+        *(norm++) = Nll;
+        *(norm++) = Nlr;
+        *(norm++) = Nur;
 
-	*(tex++) = Tll;
-	*(tex++) = Tlr;
-	*(tex++) = Tur;
+        *(tex++) = Tll;
+        *(tex++) = Tlr;
+        *(tex++) = Tur;
 
-	// Second triangle
+        // Second triangle
 
-	*(pos++) = ll;
-	*(pos++) = ur;
-	*(pos++) = ul;
+        *(pos++) = ll;
+        *(pos++) = ur;
+        *(pos++) = ul;
 
-	*(norm++) = Nll;
-	*(norm++) = Nur;
-	*(norm++) = Nul;
+        *(norm++) = Nll;
+        *(norm++) = Nur;
+        *(norm++) = Nul;
 
-	*(tex++) = Tll;
-	*(tex++) = Tur;
-	*(tex++) = Tul;
+        *(tex++) = Tll;
+        *(tex++) = Tur;
+        *(tex++) = Tul;
       }
 
     glGenVertexArrays( 1, &VAO );
@@ -176,6 +176,8 @@ void Sphere::renderGL( GPUProgram *prog, mat4 &WCS_to_VCS, mat4 &VCS_to_CCS, flo
 
     glBindBuffer( GL_ARRAY_BUFFER, 0 );
     glBindVertexArray( 0 );
+
+        delete[] attribs;
   }
 
   // Draw

@@ -7,10 +7,10 @@
 #include "glad/include/glad/glad.h"
 #include "include/GLFW/glfw3.h"
 
-#include <sys/timeb.h>	// includes ftime (to return current time)
+#include <sys/timeb.h>  // includes ftime (to return current time)
 
 #ifdef LINUX
-  #include <unistd.h>		// includes usleep (to sleep for some time)
+  #include <unistd.h>           // includes usleep (to sleep for some time)
   #include <values.h>           // includes MAX_FLOAT
   #define sprintf_s sprintf
   #define _strdup strdup

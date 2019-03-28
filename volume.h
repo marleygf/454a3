@@ -19,10 +19,10 @@ class Volume : public Object {
 
   Voxel **volume;
 
-  vec3 dim;			// dimensions of the dataset
-  vec3 scale;			// scale factor
-  vec3 centre;		// centre of dataset
-  BBox   bbox;			// bounding box
+  vec3 dim;                     // dimensions of the dataset
+  vec3 scale;                   // scale factor
+  vec3 centre;          // centre of dataset
+  BBox   bbox;                  // bounding box
 
   GLubyte *readVolume( char *filename, int width, int height, int depth );
 
@@ -31,7 +31,7 @@ class Volume : public Object {
   Volume() {}
 
   bool rayInt( vec3 rayStart, vec3 rayDir, int objPartIndex, float maxParam,
-	       vec3 &intPoint, vec3 &intNorm, vec3 &intTexCoords, float &intParam, Material * &mat, int &intPartIndex );
+               vec3 &intPoint, vec3 &intNorm, vec3 &intTexCoords, float &intParam, Material * &mat, int &intPartIndex );
 
   void input( istream &stream );
   void output( ostream &stream ) const;

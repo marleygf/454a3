@@ -13,10 +13,10 @@ ostream& operator << ( ostream& stream, Eye const& obj )
 
 {
   stream << "eye" << endl
-	 << "  " << obj.position << endl
-	 << "  " << obj.lookAt << endl
-	 << "  " << obj.upDir << endl
-	 << "  " << obj.fovy << endl;
+         << "  " << obj.position << endl
+         << "  " << obj.lookAt << endl
+         << "  " << obj.upDir << endl
+         << "  " << obj.fovy << endl;
 
   return stream;
 }

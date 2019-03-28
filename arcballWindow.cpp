@@ -135,9 +135,9 @@ void arcballWindow::mouseMotionCallback( GLFWwindow* window, double x, double y 
 
       w->fovy *= 1.0 + 0.001*(w->mouse.y-y);
       if (w->fovy > 3*3.14159/2.0)
-	w->fovy = 3*3.14159/2.0;
+        w->fovy = 3*3.14159/2.0;
       if (w->fovy < 0.1)
-	w->fovy = 0.1;
+        w->fovy = 0.1;
       w->redisplay = true;
 
     } else if (w->buttonDown == GLFW_MOUSE_BUTTON_LEFT) { // rotate
@@ -213,10 +213,10 @@ void arcballWindow::writeViewParams( char * filename )
     cerr << "Error: Failed to open the output file\n";
   } else
     out << eye    << endl
-	<< lookAt << endl
-	<< upDir  << endl
-	<< fovy   << endl
-	<< zNear << ' ' << zFar << endl;
+        << lookAt << endl
+        << upDir  << endl
+        << fovy   << endl
+        << zNear << ' ' << zFar << endl;
 }
 
 
@@ -245,7 +245,7 @@ vec3 arcballWindow::arcballPos( vec2 pos )
 {
   vec3 p(  pos.x/(float)windowWidth * 2 - 1, -(pos.y/(float)windowHeight * 2 - 1), 0 );
   float rr = p * p;
-  if (rr <= 1)			// inside arcball
+  if (rr <= 1)                  // inside arcball
     p.z = sqrt( 1 - rr );
   else
     p = p.normalize();

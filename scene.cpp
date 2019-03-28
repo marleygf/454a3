@@ -22,6 +22,8 @@
 #include "material.h"
 #include "arrow.h"
 
+#include <string>
+
 
 #ifndef MAXFLOAT
   #define MAXFLOAT 9999999
@@ -91,7 +93,7 @@ bool Scene::findFirstObjectInt( vec3 rayStart, vec3 rayDir, int thisObjIndex, in
         storedRayColours.add( vec3(.1,.7,.7) ); // CYAN: normal ray that hits something
     } else {
       if (lightIndex >= 0) {
-	storedRays.add( lights[lightIndex]->position );
+        storedRays.add( lights[lightIndex]->position );
         storedRayColours.add( vec3(.843,.710,.278) ); // GOLD: shadow ray toward a light that is NOT blocked
       } else {
         storedRays.add( rayStart+sceneScale*2*rayDir );
@@ -353,7 +355,7 @@ void Scene::read( const char *basename, istream &in )
 
       // Rely on the wavefront.cpp code to read this
 
-      string filename;
+      std::string filename;
       in >> filename;
 
       char pathname[1000];
@@ -365,7 +367,7 @@ void Scene::read( const char *basename, istream &in )
       // Update scene's scale
 
       if (o->obj->radius/2 > sceneScale)
-	sceneScale = o->obj->radius/2;
+        sceneScale = o->obj->radius/2;
       
     } else if (strcmp(command,"light") == 0) {
 

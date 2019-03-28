@@ -17,7 +17,7 @@ class Light {
   vec3 position;
   vec3 colour;
 
-  Sphere *sphere;		// Used to show light position in renderGL()
+  Sphere *sphere;               // Used to show light position in renderGL()
 
   Light() {
     sphere = NULL;
