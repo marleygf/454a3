@@ -112,6 +112,7 @@ BVH_node * BVH::buildSubtree( seq<int> &triangleIndices, int depth )
 
   seq<int> *clusterTriangles;
 
+  /*
 #if 1
 
   // Demonstration code, which assigns each triangle to a RANDOM cluster
@@ -126,7 +127,7 @@ BVH_node * BVH::buildSubtree( seq<int> &triangleIndices, int depth )
   }
 
 #else
-
+*/
   // Do NUM_CLUSTERING_ITERATIONS of the following: 1. Put triangles
   // into their closest cluster.  2. adjust the cluster means using
   // equation 2 from Meister and Bittner's paper.  (There's already a
@@ -147,7 +148,6 @@ BVH_node * BVH::buildSubtree( seq<int> &triangleIndices, int depth )
 
   // YOUR CODE HERE
 
-#endif
 
   delete[] seedBoxes;
   delete[] seedIndices;
@@ -259,6 +259,9 @@ bool BVH::rayBoxInt( vec3 &rayStart, vec3 &rayDir, float tmin, float tmax, BBox 
 
 {
   // YOUR CODE HERE
+  //Notes have 2d, look at 3d
+  float tx = (bbox.min.x - rayStart.x) / rayDir.x;
+  float ty = (bbox.min.y - rayStart.y) / rayDir.y;
   
   return true;
 }
