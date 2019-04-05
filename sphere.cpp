@@ -163,7 +163,7 @@ void Sphere::renderGL( GPUProgram *prog, mat4 &WCS_to_VCS, mat4 &VCS_to_CCS, flo
     GLuint VBO;
     glGenBuffers( 1, &VBO );
     glBindBuffer( GL_ARRAY_BUFFER, VBO );
-    glBufferData( GL_ARRAY_BUFFER, sizeof(attribs), attribs, GL_STATIC_DRAW );
+    glBufferData( GL_ARRAY_BUFFER, 3*3*numQuads*2 * sizeof(vec3), attribs, GL_STATIC_DRAW );
 
     glVertexAttribPointer( 0, 3, GL_FLOAT, GL_FALSE, 0, 0 );
     glEnableVertexAttribArray( 0 );
