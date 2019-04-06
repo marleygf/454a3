@@ -202,7 +202,7 @@ vec3 Scene::raytrace( vec3 &rayStart, vec3 &rayDir, int depth, int thisObjIndex,
 
     // YOUR CODE HERE
 
-	  vec3 glossyTotal = (0.0, 0.0, 0.0);
+	  vec3 glossyTotal = vec3(0, 0, 0);
 
 	  for (int i = 0; i < glossyIterations; i++) {
 		  float halfAngle = acos(g);
