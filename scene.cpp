@@ -202,6 +202,30 @@ vec3 Scene::raytrace( vec3 &rayStart, vec3 &rayDir, int depth, int thisObjIndex,
 
     // YOUR CODE HERE
 
+	  vec3 glossyTotal = (0, 0, 0);
+
+	  for (int i = 0; i < glossyIterations; i++) {
+		  float halfAngle = acos(g);
+		  float l = 1.0 / tan(halfAngle);
+
+		  float a = 0;
+		  float b = 0;
+		  while (pow(a, 2) + pow(b, 2) > 1) {
+			  a = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+			  b = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+		  }
+
+		  // Calculate point in circle
+		  vec3 u = R.perp1;
+		  vec3 v = R.perp2;
+		  vec3 PC = P + l * R + a * u + b * v;
+		  vec3 PCR = pow(pow(PC.x - P.x, 2) + pow(PC.y - P.y, 2) + pow(PC.z - P.z, 2), 0.5) * (PC - P);
+		  vec3 Iin = raytrace(PCR, R, depth, objIndex, objPartIndex);
+		  glossyTotal = glossyTotal + calcIout(N, R, E, E, kd, mat->ks, mat->n, Iin);
+	  }
+
+	  Iout = Iout + ((1.0 / glossyIterations) * glossyTotal);
+
   }
   
   // Add direct contributions from lights
@@ -281,7 +305,7 @@ vec3 Scene::pixelColour( int x, int y )
 
   vec3 result;
 
-#if 1
+#if 0
 
   // DELETE THE FOLLOWING in your solution code. 
 
@@ -296,6 +320,32 @@ vec3 Scene::pixelColour( int x, int y )
   // false; use a jittered patter if 'jitter' is true.
 
   // YOUR CODE HERE
+
+  if (jitter) {
+	  for (int i = 0; i < numPixelSamples; i++) {
+		  for (int j = 0; j < numPixelSamples; j++) {
+			  float rdx = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+			  float rdy = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+
+			  rdx = (rdx - 0.5) * 2.0 / numPixelSamples;
+			  rdy = (rdy - 0.5) * 2.0 / numPixelSamples;
+
+			  float dx = float(i * 2 + 1) * (1.0 / float(numPixelSamples) * 2.0) - (1.0 / float(numPixelSamples));
+			  float dy = float(j * 2 + 1) * (1.0 / float(numPixelSamples) * 2.0) - (1.0 / float(numPixelSamples));
+
+			  vec3 dir = (llCorner + (x + rdx + dx)*right + (y + rdy + dy)*up).normalize();
+			  result = result + raytrace(eye->position, dir, 0, -1, -1);
+		  }
+	  }
+  }
+  else {
+	  for (int i = 0; i < numPixelSamples * numPixelSamples; i++) {
+		  float dx = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+		  float dy = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+		  vec3 dir = (llCorner + (x + dx - 0.5)*right + (y + dy - 0.5)*up).normalize();
+		  result = result + raytrace(eye->position, dir, 0, -1, -1);
+	  }
+  }
 
 #endif
 

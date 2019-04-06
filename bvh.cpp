@@ -112,7 +112,7 @@ BVH_node * BVH::buildSubtree( seq<int> &triangleIndices, int depth )
 
   seq<int> *clusterTriangles;
 
-#if 1
+#if 0
 
   // Demonstration code, which assigns each triangle to a RANDOM cluster
   //
@@ -258,6 +258,7 @@ BBox BVH::trianglesBBox( seq<int> &triangleIndices )
 bool BVH::rayBoxInt( vec3 &rayStart, vec3 &rayDir, float tmin, float tmax, BBox &bbox )
 
 {
+	// YOUR CODE HERE
 	float tmin_x, tmax_x, tmin_y, tmax_y, tmin_z, tmax_z, tmin_current, tmax_current = 0.0;
 	
 	if (rayDir.x >= 0) {
