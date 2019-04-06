@@ -305,7 +305,7 @@ vec3 Scene::pixelColour( int x, int y )
 
   vec3 result;
 
-#if 0
+#if 1
 
   // DELETE THE FOLLOWING in your solution code. 
 
@@ -346,6 +346,8 @@ vec3 Scene::pixelColour( int x, int y )
 		  result = result + raytrace(eye->position, dir, 0, -1, -1);
 	  }
   }
+
+  result = (1 / (numPixelSamples * numPixelSamples)) * result;
 
 #endif
 

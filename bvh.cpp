@@ -112,7 +112,7 @@ BVH_node * BVH::buildSubtree( seq<int> &triangleIndices, int depth )
 
   seq<int> *clusterTriangles;
 
-#if 1
+#if 0
 
   // Demonstration code, which assigns each triangle to a RANDOM cluster
   //
@@ -146,6 +146,35 @@ BVH_node * BVH::buildSubtree( seq<int> &triangleIndices, int depth )
   // well separated, unlike those of the demonstration code, above.
 
   // YOUR CODE HERE
+
+  for(int i = 0; i < triangleIndices.size(); i++){
+	BBox  t = triangleBBox(triangleIndices[i]);
+	float d = MAXFLOAT;
+	int minindex = INT32_MAX;
+	for (int j = 0; j < numSeeds; j++) {
+		float d_i = boxBoxDistance(t, seedBoxes[j]);
+		if(d_i < d){
+			minindex = j;
+			d = d_i;
+		}
+	}
+	clusterTriangles[minindex].add(triangleIndices[i]);
+  }
+
+  for (int i = 0; i < numSeeds; i++) {
+	  vec3 minsum = vec3(0, 0, 0);
+	  vec3 maxsum = vec3(0, 0, 0);
+	  for (int j = 0; j < clusterTriangles[i].size(); j++) {
+		  BBox t = triangleBBox(clusterTriangles[i][j]);
+		  minsum = minsum + t.min;
+		  maxsum = maxsum + t.max;
+	  }
+	  minsum = (1 / clusterTriangles[i].size()) * minsum;
+	  maxsum = (1 / clusterTriangles[i].size()) * maxsum;
+
+	  seedBoxes[i] = BBox(minsum, maxsum);
+  }
+  
 
 #endif
 
