@@ -258,9 +258,60 @@ BBox BVH::trianglesBBox( seq<int> &triangleIndices )
 bool BVH::rayBoxInt( vec3 &rayStart, vec3 &rayDir, float tmin, float tmax, BBox &bbox )
 
 {
-  // YOUR CODE HERE
-  
-  return true;
+	float tmin_x, tmax_x, tmin_y, tmax_y, tmin_z, tmax_z, tmin_current, tmax_current = 0.0;
+	
+	if (rayDir.x >= 0) {
+		tmin_x = (bbox.min.x - rayStart.x) / rayDir.x;
+		tmax_x = (bbox.max.x - rayStart.x) / rayDir.x;
+	}
+	else {
+		tmax_x = (bbox.min.x - rayStart.x) / rayDir.x;
+		tmin_x = (bbox.max.x - rayStart.x) / rayDir.x;
+	}
+
+	if (rayDir.y >= 0) {
+		tmin_y = (bbox.min.y - rayStart.y) / rayDir.y;
+		tmax_y = (bbox.max.y - rayStart.y) / rayDir.y;
+	}
+	else {
+		tmax_y = (bbox.min.y - rayStart.y) / rayDir.y;
+		tmin_y = (bbox.max.y - rayStart.y) / rayDir.y;
+	}
+
+	if (rayDir.z >= 0) {
+		tmin_z = (bbox.min.z - rayStart.z) / rayDir.z;
+		tmax_z = (bbox.max.z - rayStart.z) / rayDir.z;
+	}
+	else {
+		tmax_z = (bbox.min.z - rayStart.z) / rayDir.z;
+		tmin_z = (bbox.max.z - rayStart.z) / rayDir.z;
+	}
+
+	if (tmax_x < tmin_y || tmin_x > tmax_y) {
+		return false;
+	}
+
+	tmin_current = MAX(tmin_x, tmin_y);
+	tmax_current = MIN(tmax_x, tmax_y);
+
+	if (tmin_current > tmax || tmax_current < tmin) {
+		return false;
+	}
+
+	if (tmin_current > tmax_z  || tmax_current < tmin_z) {
+		return false;
+	}
+
+	tmin_current = MAX(tmin_current, tmin_z);
+	tmax_current = MIN(tmax_current, tmax_z);
+
+	if (tmin_current < tmax && tmax_current > tmin) {
+		return true;
+	}
+	else {
+		return false;
+	}
+
 }
 
 
