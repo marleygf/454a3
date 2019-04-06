@@ -216,8 +216,8 @@ vec3 Scene::raytrace( vec3 &rayStart, vec3 &rayDir, int depth, int thisObjIndex,
 		  }
 
 		  // Calculate point in circle
-		  vec3 u = R.perp1;
-		  vec3 v = R.perp2;
+		  vec3 u = R.perp1();
+		  vec3 v = R.perp2();
 		  vec3 PC = P + l * R + a * u + b * v;
 		  vec3 PCR = pow(pow(PC.x - P.x, 2) + pow(PC.y - P.y, 2) + pow(PC.z - P.z, 2), 0.5) * (PC - P);
 		  vec3 Iin = raytrace(PCR, R, depth, objIndex, objPartIndex);
