@@ -110,6 +110,7 @@ BVH_node * BVH::buildSubtree( seq<int> &triangleIndices, int depth )
 
   // Iteratively cluster around each seed
 
+  
   seq<int> *clusterTriangles;
 
 #if 0
@@ -146,6 +147,7 @@ BVH_node * BVH::buildSubtree( seq<int> &triangleIndices, int depth )
   // well separated, unlike those of the demonstration code, above.
 
   // YOUR CODE HERE
+
   clusterTriangles = new seq<int>[numSeeds];
 
   for (int n = 0; n < NUM_CLUSTERING_ITERATIONS; n++) {
@@ -174,8 +176,8 @@ BVH_node * BVH::buildSubtree( seq<int> &triangleIndices, int depth )
 			  maxsum = maxsum + t.max;
 		  }
 		  if (clusterTriangles[i].size() > 0) {
-			  minsum = (1 / clusterTriangles[i].size()) * minsum;
-			  maxsum = (1 / clusterTriangles[i].size()) * maxsum;
+			  minsum = (1.0 / float(clusterTriangles[i].size())) * minsum;
+			  maxsum = (1.0 / float(clusterTriangles[i].size())) * maxsum;
 
 			  seedBoxes[i] = BBox(minsum, maxsum);
 		  }
@@ -294,6 +296,7 @@ bool BVH::rayBoxInt( vec3 &rayStart, vec3 &rayDir, float tmin, float tmax, BBox 
 
 {
 	// YOUR CODE HERE
+
 	float tmin_x, tmax_x, tmin_y, tmax_y, tmin_z, tmax_z, tmin_current, tmax_current = 0;
 	
 	if (rayDir.x >= 0) {
@@ -329,6 +332,10 @@ bool BVH::rayBoxInt( vec3 &rayStart, vec3 &rayDir, float tmin, float tmax, BBox 
 
 	tmin_current = MAX(tmin_x, tmin_y);
 	tmax_current = MIN(tmax_x, tmax_y);
+
+	if (tmin_current > tmax || tmax_current < tmin) {
+		return false;
+	}
 
 	if (tmin_current > tmax_z  || tmax_current < tmin_z) {
 		return false;

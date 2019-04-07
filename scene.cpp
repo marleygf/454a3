@@ -306,7 +306,7 @@ vec3 Scene::pixelColour( int x, int y )
 
   vec3 result = vec3(0,0,0);
 
-#if 1
+#if 0
 
   // DELETE THE FOLLOWING in your solution code. 
 
@@ -322,19 +322,16 @@ vec3 Scene::pixelColour( int x, int y )
 
   // YOUR CODE HERE
 
-  if (jitter == 1) {
+  if (jitter) {
 	  for (int i = 0; i < numPixelSamples; i++) {
 		  for (int j = 0; j < numPixelSamples; j++) {
-			  float rdx = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+			  float rdx = static_cast <float> (rand()) / static_cast <float> (RAND_MAX); // [0,1]
 			  float rdy = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
 
-			  rdx = (rdx - 0.5) * 2.0 / numPixelSamples;
-			  rdy = (rdy - 0.5) * 2.0 / numPixelSamples;
-
-			  float dx = float(i * 2 + 1) * (1.0 / float(numPixelSamples) * 2.0) - (1.0 / float(numPixelSamples));
-			  float dy = float(j * 2 + 1) * (1.0 / float(numPixelSamples) * 2.0) - (1.0 / float(numPixelSamples));
-
-			  vec3 dir = (llCorner + (x + rdx + dx)*right + (y + rdy + dy)*up).normalize();
+			  rdx = rdx * (1.0 / float(numPixelSamples)) + (float(i) / float(numPixelSamples));
+			  rdy = rdy * (1.0 / float(numPixelSamples)) + (float(j) / float(numPixelSamples));
+			  
+			  vec3 dir = (llCorner + (x + rdx)*right + (y + rdy)*up).normalize();
 			  result = result + raytrace(eye->position, dir, 0, -1, -1);
 		  }
 	  }
@@ -342,13 +339,16 @@ vec3 Scene::pixelColour( int x, int y )
   else {
 	  for (int i = 0; i < numPixelSamples; i++) {
 		  for (int j = 0; j < numPixelSamples; j++) {
-			  vec3 dir = (llCorner + (x + i)*right + (y + j)*up).normalize();
+			  float dx = float(i) / float(numPixelSamples);
+			  float dy = float(j) / float(numPixelSamples);
+			  vec3 dir = (llCorner + (x + dx)*right + (y + dy)*up).normalize();
 			  result = result + raytrace(eye->position, dir, 0, -1, -1);
 		  }
 	  }
   }
 
-  result = (1 / (numPixelSamples * numPixelSamples)) * result;
+  result = 1.0 / float(numPixelSamples * numPixelSamples) * result;
+
 
 #endif
 
