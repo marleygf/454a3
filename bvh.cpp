@@ -146,11 +146,12 @@ BVH_node * BVH::buildSubtree( seq<int> &triangleIndices, int depth )
   // well separated, unlike those of the demonstration code, above.
 
   // YOUR CODE HERE
+  clusterTriangles = new seq<int>[numSeeds];
 
   for(int i = 0; i < triangleIndices.size(); i++){
 	BBox  t = triangleBBox(triangleIndices[i]);
-	float d = MAXFLOAT;
-	int minindex = INT32_MAX;
+	float d = boxBoxDistance(t, seedBoxes[0]);
+	int minindex = 0;
 	for (int j = 0; j < numSeeds; j++) {
 		float d_i = boxBoxDistance(t, seedBoxes[j]);
 		if(d_i < d){
@@ -160,7 +161,7 @@ BVH_node * BVH::buildSubtree( seq<int> &triangleIndices, int depth )
 	}
 	clusterTriangles[minindex].add(triangleIndices[i]);
   }
-
+  
   for (int i = 0; i < numSeeds; i++) {
 	  vec3 minsum = vec3(0, 0, 0);
 	  vec3 maxsum = vec3(0, 0, 0);
@@ -169,10 +170,12 @@ BVH_node * BVH::buildSubtree( seq<int> &triangleIndices, int depth )
 		  minsum = minsum + t.min;
 		  maxsum = maxsum + t.max;
 	  }
-	  minsum = (1 / clusterTriangles[i].size()) * minsum;
-	  maxsum = (1 / clusterTriangles[i].size()) * maxsum;
+	  if (clusterTriangles[i].size() > 0) {
+		  minsum = (1 / clusterTriangles[i].size()) * minsum;
+		  maxsum = (1 / clusterTriangles[i].size()) * maxsum;
 
-	  seedBoxes[i] = BBox(minsum, maxsum);
+		  seedBoxes[i] = BBox(minsum, maxsum);
+	  }
   }
   
 

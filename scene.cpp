@@ -208,8 +208,8 @@ vec3 Scene::raytrace( vec3 &rayStart, vec3 &rayDir, int depth, int thisObjIndex,
 		  float halfAngle = acos(g);
 		  float l = 1.0 / tan(halfAngle);
 
-		  float a = 0;
-		  float b = 0;
+		  float a = 1;
+		  float b = 1;
 		  while (pow(a, 2) + pow(b, 2) > 1) {
 			  a = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
 			  b = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
@@ -219,8 +219,9 @@ vec3 Scene::raytrace( vec3 &rayStart, vec3 &rayDir, int depth, int thisObjIndex,
 		  vec3 u = R.perp1();
 		  vec3 v = R.perp2();
 		  vec3 PC = P + l * R + a * u + b * v;
-		  vec3 PCR = pow(pow(PC.x - P.x, 2) + pow(PC.y - P.y, 2) + pow(PC.z - P.z, 2), 0.5) * (PC - P);
-		  vec3 Iin = raytrace(PCR, R, depth, objIndex, objPartIndex);
+		  PC = PC - P;
+		  vec3 PCR = pow(pow(PC.x - P.x, 2) + pow(PC.y - P.y, 2) + pow(PC.z - P.z, 2), 0.5) * (PC);
+		  vec3 Iin = raytrace(P, PCR, depth, objIndex, objPartIndex);
 		  glossyTotal = glossyTotal + calcIout(N, R, E, E, kd, mat->ks, mat->n, Iin);
 	  }
 
@@ -342,7 +343,7 @@ vec3 Scene::pixelColour( int x, int y )
 	  for (int i = 0; i < numPixelSamples * numPixelSamples; i++) {
 		  float dx = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
 		  float dy = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-		  vec3 dir = (llCorner + (x + dx - 0.5)*right + (y + dy - 0.5)*up).normalize();
+		  vec3 dir = (llCorner + (x + i - 0.5)*right + (y + i - 0.5)*up).normalize();
 		  result = result + raytrace(eye->position, dir, 0, -1, -1);
 	  }
   }
