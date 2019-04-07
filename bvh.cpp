@@ -150,6 +150,7 @@ BVH_node * BVH::buildSubtree( seq<int> &triangleIndices, int depth )
 
   for (int n = 0; n < NUM_CLUSTERING_ITERATIONS; n++) {
 	  clusterTriangles->clear();
+	  clusterTriangles = new seq<int>[numSeeds];
 	  for (int i = 0; i < triangleIndices.size(); i++) {
 		  BBox  t = triangleBBox(triangleIndices[i]);
 		  float d = boxBoxDistance(t, seedBoxes[0]);
