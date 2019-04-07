@@ -304,7 +304,7 @@ vec3 Scene::pixelColour( int x, int y )
     cout << "---------------- start debugging at pixel " << debugPixel << " ----------------" << endl;
   }
 
-  vec3 result;
+  vec3 result = vec3(0,0,0);
 
 #if 1
 
@@ -322,7 +322,7 @@ vec3 Scene::pixelColour( int x, int y )
 
   // YOUR CODE HERE
 
-  if (jitter) {
+  if (jitter == 1) {
 	  for (int i = 0; i < numPixelSamples; i++) {
 		  for (int j = 0; j < numPixelSamples; j++) {
 			  float rdx = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
@@ -340,11 +340,11 @@ vec3 Scene::pixelColour( int x, int y )
 	  }
   }
   else {
-	  for (int i = 0; i < numPixelSamples * numPixelSamples; i++) {
-		  float dx = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-		  float dy = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-		  vec3 dir = (llCorner + (x + i - 0.5)*right + (y + i - 0.5)*up).normalize();
-		  result = result + raytrace(eye->position, dir, 0, -1, -1);
+	  for (int i = 0; i < numPixelSamples; i++) {
+		  for (int j = 0; j < numPixelSamples; j++) {
+			  vec3 dir = (llCorner + (x + i)*right + (y + j)*up).normalize();
+			  result = result + raytrace(eye->position, dir, 0, -1, -1);
+		  }
 	  }
   }
 

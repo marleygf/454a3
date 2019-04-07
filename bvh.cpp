@@ -148,37 +148,39 @@ BVH_node * BVH::buildSubtree( seq<int> &triangleIndices, int depth )
   // YOUR CODE HERE
   clusterTriangles = new seq<int>[numSeeds];
 
-  for(int i = 0; i < triangleIndices.size(); i++){
-	BBox  t = triangleBBox(triangleIndices[i]);
-	float d = boxBoxDistance(t, seedBoxes[0]);
-	int minindex = 0;
-	for (int j = 0; j < numSeeds; j++) {
-		float d_i = boxBoxDistance(t, seedBoxes[j]);
-		if(d_i < d){
-			minindex = j;
-			d = d_i;
-		}
-	}
-	clusterTriangles[minindex].add(triangleIndices[i]);
-  }
-  
-  for (int i = 0; i < numSeeds; i++) {
-	  vec3 minsum = vec3(0, 0, 0);
-	  vec3 maxsum = vec3(0, 0, 0);
-	  for (int j = 0; j < clusterTriangles[i].size(); j++) {
-		  BBox t = triangleBBox(clusterTriangles[i][j]);
-		  minsum = minsum + t.min;
-		  maxsum = maxsum + t.max;
+  for (int n = 0; n < NUM_CLUSTERING_ITERATIONS; n++) {
+	  clusterTriangles->clear();
+	  for (int i = 0; i < triangleIndices.size(); i++) {
+		  BBox  t = triangleBBox(triangleIndices[i]);
+		  float d = boxBoxDistance(t, seedBoxes[0]);
+		  int minindex = 0;
+		  for (int j = 0; j < numSeeds; j++) {
+			  float d_i = boxBoxDistance(t, seedBoxes[j]);
+			  if (d_i < d) {
+				  minindex = j;
+				  d = d_i;
+			  }
+		  }
+		  clusterTriangles[minindex].add(triangleIndices[i]);
 	  }
-	  if (clusterTriangles[i].size() > 0) {
-		  minsum = (1 / clusterTriangles[i].size()) * minsum;
-		  maxsum = (1 / clusterTriangles[i].size()) * maxsum;
 
-		  seedBoxes[i] = BBox(minsum, maxsum);
+	  for (int i = 0; i < numSeeds; i++) {
+		  vec3 minsum = vec3(0, 0, 0);
+		  vec3 maxsum = vec3(0, 0, 0);
+		  for (int j = 0; j < clusterTriangles[i].size(); j++) {
+			  BBox t = triangleBBox(clusterTriangles[i][j]);
+			  minsum = minsum + t.min;
+			  maxsum = maxsum + t.max;
+		  }
+		  if (clusterTriangles[i].size() > 0) {
+			  minsum = (1 / clusterTriangles[i].size()) * minsum;
+			  maxsum = (1 / clusterTriangles[i].size()) * maxsum;
+
+			  seedBoxes[i] = BBox(minsum, maxsum);
+		  }
 	  }
-  }
-  
 
+  }
 #endif
 
   delete[] seedBoxes;
@@ -326,10 +328,6 @@ bool BVH::rayBoxInt( vec3 &rayStart, vec3 &rayDir, float tmin, float tmax, BBox 
 
 	tmin_current = MAX(tmin_x, tmin_y);
 	tmax_current = MIN(tmax_x, tmax_y);
-
-	if (tmin_current > tmax || tmax_current < tmin) {
-		return false;
-	}
 
 	if (tmin_current > tmax_z  || tmax_current < tmin_z) {
 		return false;
