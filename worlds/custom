@@ -1,0 +1,59 @@
+# My Custom Scene
+
+eye        
+  -34 15 66
+  0 0 0
+  0 1 0
+  0.5
+
+light
+  10 10 10
+  0 1 0
+
+light
+  -10 10 -10
+  0 0 1
+
+light
+  -1 0 1      # position
+  1 0 0       # colour
+
+material
+  floor       # name
+  0 0 0       # ambient reflectivity (Ka)
+  0.4 0.4 0.4 # diffuse reflectivity (Kd)
+  0 0 0       # specular reflectivity (Ks)
+  100         # shininess (n)
+  .990        # glossiness (g)
+  0 0 0       # emission (Ie)
+  0.7         # opacity (alpha)
+  -           # texture filename (- means none)
+  -           # bump map filename (- means none)
+
+material
+  glass       # name
+  0 0 0       # ambient reflectivity (Ka)
+  1 1 1       # diffuse reflectivity (Kd)
+  0 0 0       # specular reflectivity (Ks)
+  10           # shininess (n)
+  1           # glossiness (g)
+  0 0 0       # emission (Ie)
+  0.7           # opacity (alpha)
+  data/musicGlass.ppm  # texture filename (- means none)
+  -           # bump map filename (- means none)
+
+  # glossy floor
+
+triangle
+  -70 -70 -20 / 0 0
+  70 -70 -20 / 1 0
+  -70 70 -20 / 0 1
+  floor
+
+triangle
+  70 -70 -20 / 1 0
+  70 70 -20 / 1 1
+  -70 70 -20 / 0 1
+  glass
+
+  wavefront hand.obj
